@@ -1,0 +1,29 @@
+{
+  "name": "webpack-watch-external-files-plugin",
+  "version": "0.0.1",
+  "description": "Webpack plugin to watch external files",
+  "private": false,
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Amit Singh <amitsingh5198@gmail.com> (https://github.com/amitsingh-007/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "webpack plugin",
+    "watch external files"
+  ],
+  "bugs": {
+    "url": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin/issues",
+    "email": "amitsingh5198@gmail.com"
+  },
+  "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "peerDependencies": {
+    "webpack": "^4 || ^5"
+  }
+}
