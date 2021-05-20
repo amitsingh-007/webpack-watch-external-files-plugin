@@ -32,7 +32,7 @@ module.exports = {
 # Options
 
 ```js
-new FileManagerPlugin({
+new WatchExternalFilesPlugin({
   files: [],
 });
 ```
