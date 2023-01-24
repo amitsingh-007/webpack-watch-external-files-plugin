@@ -23,7 +23,18 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "scripts": {
+    "test": "vitest run --no-threads"
+  },
   "peerDependencies": {
     "webpack": "^4 || ^5"
+  },
+  "dependencies": {
+    "glob": "8.1.0"
+  },
+  "devDependencies": {
+    "rimraf": "4.1.1",
+    "vitest": "0.28.1",
+    "webpack": "5.75.0"
   }
 }
