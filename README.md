@@ -37,6 +37,4 @@ new WatchExternalFilesPlugin({
 });
 ```
 
-**Options**
-
 - files[`list<string>`] - a list of files or glob patterns
