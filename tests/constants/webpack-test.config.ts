@@ -1,32 +1,43 @@
-import { Configuration } from "webpack";
-import WatchExternalFilesPlugin from "../../index";
-import { resolve } from "path";
+import { resolve } from 'path';
+import { Configuration } from 'webpack';
+import WatchExternalFilesPluginCJS from '../../dist';
+import WatchExternalFilesPluginESM from '../../dist/esm';
+import { IPlugin } from '../types';
 
-const outputDir = resolve(__dirname, "..", "dist");
+const outputDir = resolve(__dirname, '..', 'dist');
 
-const getWebpackConfig = (usePlugin: boolean): Configuration => ({
-  mode: "production",
-  name: "test",
-  entry: ["./tests/files/test-file.js"],
+const getPlugins = (type: IPlugin) => {
+  const plugins: Configuration['plugins'] = [];
+  if (type === 'NONE') {
+    return plugins;
+  }
+  const WatchExternalFilesPlugin =
+    type === 'CJS' ? WatchExternalFilesPluginCJS : WatchExternalFilesPluginESM;
+  plugins.push(
+    new WatchExternalFilesPlugin({
+      files: ['tests/files/external-file.js'],
+    })
+  );
+  return plugins;
+};
+
+const getWebpackConfig = (type: IPlugin): Configuration => ({
+  mode: 'production',
+  name: 'test',
+  entry: ['./tests/files/test-file.js'],
   output: {
     filename: () => `${Date.now()}.[name].js`,
-    chunkFilename: "[name].[hash].js",
+    chunkFilename: '[name].[hash].js',
     path: outputDir,
   },
   resolve: {
-    extensions: [".js"],
+    extensions: ['.js'],
   },
   devtool: false,
   watchOptions: {
-    ignored: "node_modules/**",
+    ignored: 'node_modules/**',
   },
-  plugins: [
-    usePlugin
-      ? new WatchExternalFilesPlugin({
-          files: ["tests/files/external-file.js"],
-        })
-      : null,
-  ].filter(Boolean),
+  plugins: getPlugins(type),
 });
 
 export default getWebpackConfig;

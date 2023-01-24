@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "es6",
     "moduleResolution": "node",
     "lib": ["esnext"],
     "strict": true,
@@ -12,7 +11,8 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowJs": true,
-    "noEmit": true
+    "noEmit": true,
+    "declaration": true
   },
-  "include": ["tests", "@types"]
+  "include": ["tests", "src", "tsup.config.ts"]
 }

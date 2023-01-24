@@ -1,5 +1,7 @@
 node_modules
 .github
 tests
+src
 @types/webpack.d.ts
 readme.md
+tsconfig.json

@@ -1,10 +1,14 @@
-const glob = require('glob');
-const { resolve } = require('path');
+import glob from 'glob';
+import { resolve } from 'path';
+import { Compiler } from 'webpack';
+import { PLUGIN_NAME } from './constants/plugin';
+import { IOptions } from './types/plugin';
 
-const PLUGIN_NAME = 'WebpackWatchExternalFilesPlugin';
-
-const getExternalFilesToWatch = (files) => {
-  const { filesToWatch, filesToExclude } = files.reduce(
+const getExternalFilesToWatch = (files: string[]) => {
+  const { filesToWatch, filesToExclude } = files.reduce<{
+    filesToWatch: string[];
+    filesToExclude: string[];
+  }>(
     (obj, pattern) => {
       if (pattern[0] !== '!') {
         const files = glob.sync(pattern);
@@ -28,24 +32,27 @@ const getExternalFilesToWatch = (files) => {
   return resolvedFilesToWatch;
 };
 
-function WatchExternalFilesPlugin({ files = [] }) {
-  this.apply = (compiler) => {
-    const logger = compiler.getInfrastructureLogger(PLUGIN_NAME);
-    compiler.hooks.initialize.tap(PLUGIN_NAME, (_compilation) => {
-      logger.info('Watching External Files :', files);
-    });
+class WatchExternalFilesPlugin {
+  private files: string[];
+  constructor({ files }: IOptions) {
+    //TODO: add validation
+    this.files = files;
+  }
 
+  apply(compiler: Compiler) {
+    const logger = compiler.getInfrastructureLogger(PLUGIN_NAME);
+    compiler.hooks.initialize.tap(PLUGIN_NAME, () => {
+      logger.info('Watching External Files:', this.files);
+    });
     compiler.hooks.afterCompile.tapAsync(
       PLUGIN_NAME,
       (compilation, callback) => {
-        const filesToWatch = getExternalFilesToWatch(files);
-
+        const filesToWatch = getExternalFilesToWatch(this.files);
         filesToWatch.map((file) => compilation.fileDependencies.add(file));
-
         callback();
       }
     );
-  };
+  }
 }
 
-module.exports = WatchExternalFilesPlugin;
+export default WatchExternalFilesPlugin;
