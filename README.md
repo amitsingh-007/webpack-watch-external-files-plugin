@@ -18,12 +18,12 @@ yarn add webpack-watch-external-files-plugin --dev
 ```js
 // webpack.config.js:
 
-const WatchExternalFilesPlugin = require("webpack-watch-external-files-plugin");
+const WatchExternalFilesPlugin = require('webpack-watch-external-files-plugin');
 
 module.exports = {
   plugins: [
     new WatchExternalFilesPlugin({
-      files: ["/path/**/*.js", "/path/tofile.txt", "!./src/**/*.json"],
+      files: ['/path/**/*.js', '/path/tofile.txt', '!./src/**/*.json'],
     }),
   ],
 };

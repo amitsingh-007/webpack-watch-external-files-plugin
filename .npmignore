@@ -1,2 +1,5 @@
 node_modules
-.github/
+.github
+tests
+@types/webpack.d.ts
+readme.md
