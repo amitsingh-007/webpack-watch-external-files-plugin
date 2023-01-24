@@ -1,1 +1,1 @@
-console.log("Test file for webpack plugin test");
+console.log('Test file for webpack plugin test');

@@ -1,9 +1,10 @@
-import { EventEmitter } from "events";
-import { Compiler, Watching, webpack } from "webpack";
-import getWebpackConfig from "../constants/webpack-test.config";
+import { EventEmitter } from 'events';
+import { Compiler, Watching, webpack } from 'webpack';
+import getWebpackConfig from '../constants/webpack-test.config';
+import { IPlugin } from '../types';
 
 export const EVENTS = {
-  EMIT: "emit",
+  EMIT: 'emit',
 } as const;
 
 class WebpackRunner {
@@ -12,19 +13,19 @@ class WebpackRunner {
   private readonly watching: Watching;
   private emitCount = 0;
 
-  constructor(usePlugin: boolean) {
-    const config = getWebpackConfig(usePlugin);
+  constructor(type: IPlugin) {
+    const config = getWebpackConfig(type);
     this.compiler = webpack(config);
     this.watching = this.compiler.watch({}, (err, stats) => {
       if (err) throw new Error(err.message);
       if (stats?.hasErrors()) throw new Error(stats.toString());
-      console.log("Webpack watching...");
+      console.log('Webpack watching...');
     });
     this.addListeners();
   }
 
   private addListeners = () => {
-    this.compiler.hooks.afterEmit.tap("test", () => {
+    this.compiler.hooks.afterEmit.tap('test', () => {
       this.eventEmitter.emit(EVENTS.EMIT, ++this.emitCount);
     });
   };
@@ -32,7 +33,7 @@ class WebpackRunner {
   private closeWatching = async () =>
     new Promise<void>((resolve, reject) => {
       this.watching.close((closeErr) => {
-        console.log("Watching ended.");
+        console.log('Watching ended.');
         return closeErr ? reject(closeErr) : resolve();
       });
     });
@@ -40,7 +41,7 @@ class WebpackRunner {
   private closeCompiler = async () =>
     new Promise<void>((resolve, reject) => {
       this.compiler.close((closeErr) => {
-        console.log("Compiler ended.");
+        console.log('Compiler ended.');
         return closeErr ? reject(closeErr) : resolve();
       });
     });
@@ -55,7 +56,7 @@ class WebpackRunner {
       try {
         this.eventEmitter.removeAllListeners(EVENTS.EMIT);
         await Promise.all([this.closeWatching(), this.closeCompiler()]);
-        console.log("Cleanup complete.");
+        console.log('Cleanup complete.');
         resolve();
       } catch (e) {
         reject(e);

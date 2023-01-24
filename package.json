@@ -1,9 +1,16 @@
 {
   "name": "webpack-watch-external-files-plugin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Webpack plugin to watch external files",
   "private": false,
-  "main": "index.js",
+  "main": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.cjs",
+    "import": "./dist/esm/index.js",
+    "default": "./dist/esm/index.js"
+  },
   "license": "MIT",
   "author": "Amit Singh <amitsingh5198@gmail.com> (https://github.com/amitsingh-007/)",
   "repository": {
@@ -21,10 +28,11 @@
   },
   "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=14"
   },
   "scripts": {
-    "dist": "pnpm test",
+    "build": "tsup-node",
+    "dist": "pnpm test && pnpm build",
     "test": "vitest run --no-threads"
   },
   "peerDependencies": {
@@ -34,7 +42,10 @@
     "glob": "8.1.0"
   },
   "devDependencies": {
+    "@types/glob": "8.0.1",
+    "tsup": "6.5.0",
     "rimraf": "4.1.1",
+    "typescript": "4.9.4",
     "vitest": "0.28.1",
     "webpack": "5.75.0"
   }
