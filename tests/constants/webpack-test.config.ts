@@ -1,7 +1,6 @@
 import { resolve } from 'path';
 import { Configuration } from 'webpack';
-import WatchExternalFilesPluginCJS from '../../dist';
-import WatchExternalFilesPluginESM from '../../dist/esm';
+import WatchExternalFilesPlugin from '../../dist';
 import { IPlugin } from '../types';
 
 const outputDir = resolve(__dirname, '..', 'dist');
@@ -11,8 +10,6 @@ const getPlugins = (type: IPlugin) => {
   if (type === 'NONE') {
     return plugins;
   }
-  const WatchExternalFilesPlugin =
-    type === 'CJS' ? WatchExternalFilesPluginCJS : WatchExternalFilesPluginESM;
   plugins.push(
     new WatchExternalFilesPlugin({
       files: ['tests/files/external-file.js'],

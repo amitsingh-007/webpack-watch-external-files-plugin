@@ -3,14 +3,8 @@
   "version": "2.0.0",
   "description": "Webpack plugin to watch external files",
   "private": false,
-  "main": "./dist/esm/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    "types": "./dist/index.d.ts",
-    "require": "./dist/index.js",
-    "import": "./dist/esm/index.js",
-    "default": "./dist/esm/index.js"
-  },
   "license": "MIT",
   "author": "Amit Singh <amitsingh5198@gmail.com> (https://github.com/amitsingh-007/)",
   "repository": {

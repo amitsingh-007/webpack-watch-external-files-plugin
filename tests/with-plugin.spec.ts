@@ -16,7 +16,7 @@ describe('with plugin', () => {
     await runner.cleanup();
   });
 
-  it.each<IPlugin[]>([['ESM'], ['CJS']])(
+  it.each<IPlugin[]>([['CJS']])(
     'should run webpack again on external file change',
     async (type) => {
       runner = new WebpackRunner(type);
@@ -28,7 +28,7 @@ describe('with plugin', () => {
     }
   );
 
-  it.each<IPlugin[]>([['ESM'], ['CJS']])(
+  it.each<IPlugin[]>([['CJS']])(
     'should not run webpack again on dummy file change',
     async (type) => {
       runner = new WebpackRunner(type);
