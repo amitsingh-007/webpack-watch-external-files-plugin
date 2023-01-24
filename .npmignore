@@ -1,2 +1,5 @@
 node_modules
-.github/
+.github
+tests
+src
+tsconfig.json
