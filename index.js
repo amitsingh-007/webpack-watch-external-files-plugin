@@ -1,12 +1,12 @@
-const glob = require("glob");
-const { resolve } = require("path");
+const glob = require('glob');
+const { resolve } = require('path');
 
-const PLUGIN_NAME = "WebpackWatchExternalFilesPlugin";
+const PLUGIN_NAME = 'WebpackWatchExternalFilesPlugin';
 
 const getExternalFilesToWatch = (files) => {
   const { filesToWatch, filesToExclude } = files.reduce(
     (obj, pattern) => {
-      if (pattern[0] !== "!") {
+      if (pattern[0] !== '!') {
         const files = glob.sync(pattern);
         obj.filesToWatch.push(...files);
       } else {
@@ -32,7 +32,7 @@ function WatchExternalFilesPlugin({ files = [] }) {
   this.apply = (compiler) => {
     const logger = compiler.getInfrastructureLogger(PLUGIN_NAME);
     compiler.hooks.initialize.tap(PLUGIN_NAME, (_compilation) => {
-      logger.info("Watching External Files :", files);
+      logger.info('Watching External Files :', files);
     });
 
     compiler.hooks.afterCompile.tapAsync(

@@ -24,6 +24,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
+    "dist": "pnpm test",
     "test": "vitest run --no-threads"
   },
   "peerDependencies": {
