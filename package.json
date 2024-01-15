@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "scripts": {
     "build": "tsup-node",
