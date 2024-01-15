@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import { resolve } from 'path';
 import { Compiler } from 'webpack';
 import { PLUGIN_NAME } from './constants/plugin';
@@ -11,10 +11,10 @@ const getExternalFilesToWatch = (files: string[]) => {
   }>(
     (obj, pattern) => {
       if (pattern[0] !== '!') {
-        const files = glob.sync(pattern);
+        const files = globSync(pattern);
         obj.filesToWatch.push(...files);
       } else {
-        const files = glob.sync(pattern.substr(1));
+        const files = globSync(pattern.substr(1));
         obj.filesToExclude.push(...files);
       }
       return obj;

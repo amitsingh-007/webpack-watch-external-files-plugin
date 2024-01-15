@@ -27,7 +27,7 @@
   "scripts": {
     "build": "tsup-node",
     "dist": "pnpm test && pnpm build",
-    "test": "vitest run --no-threads"
+    "test": "vitest run --poolOptions.threads.singleThread"
   },
   "peerDependencies": {
     "webpack": "^4 || ^5"

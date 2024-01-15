@@ -1,4 +1,4 @@
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { dummyFile, externalFile, testDistDir } from './constants/path';
 import { getDirFilesCount, modifyExternalFileOnce } from './helpers/file';
