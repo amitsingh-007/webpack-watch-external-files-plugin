@@ -22,26 +22,26 @@
   },
   "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "scripts": {
     "build": "tsup-node",
     "dist": "pnpm test && pnpm build",
-    "test": "vitest run --no-threads"
+    "test": "vitest run --poolOptions.threads.singleThread"
   },
   "peerDependencies": {
     "webpack": "^4 || ^5"
   },
   "dependencies": {
-    "glob": "8.1.0",
+    "glob": "10.3.10",
     "path": "0.12.7"
   },
   "devDependencies": {
     "@types/glob": "8.0.1",
-    "rimraf": "4.1.1",
-    "tsup": "6.5.0",
-    "typescript": "4.9.4",
-    "vitest": "0.28.1",
-    "webpack": "5.75.0"
+    "rimraf": "5.0.5",
+    "tsup": "8.0.1",
+    "typescript": "4.9.5",
+    "vitest": "1.2.0",
+    "webpack": "5.89.0"
   }
 }

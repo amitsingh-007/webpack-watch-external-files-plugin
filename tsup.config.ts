@@ -7,7 +7,7 @@ export default defineConfig({
   treeshake: true,
   clean: true,
   entry: ['src/index.ts'],
-  target: 'node14',
+  target: 'node16',
   env: {
     NODE_ENV: 'production',
   },
