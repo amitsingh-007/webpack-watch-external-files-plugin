@@ -42,6 +42,6 @@
     "tsup": "8.0.1",
     "typescript": "4.9.5",
     "vitest": "1.2.0",
-    "webpack": "5.89.0"
+    "webpack": "5.91.0"
   }
 }
