@@ -54,7 +54,6 @@ class WebpackRunner {
   cleanup = async (): Promise<void> =>
     new Promise(async (resolve, reject) => {
       try {
-        console.log('amit 3');
         this.eventEmitter.removeAllListeners(EVENTS.EMIT);
         await Promise.all([this.closeWatching(), this.closeCompiler()]);
         console.log('Cleanup complete.');

@@ -33,15 +33,15 @@
     "webpack": "^4 || ^5"
   },
   "dependencies": {
-    "glob": "10.3.10",
+    "glob": "10.4.2",
     "path": "0.12.7"
   },
   "devDependencies": {
-    "@types/glob": "8.0.1",
-    "rimraf": "5.0.5",
-    "tsup": "8.0.1",
-    "typescript": "4.9.5",
-    "vitest": "1.2.0",
-    "webpack": "5.89.0"
+    "@types/glob": "8.1.0",
+    "rimraf": "5.0.7",
+    "tsup": "8.1.0",
+    "typescript": "5.5.2",
+    "vitest": "1.6.0",
+    "webpack": "5.92.1"
   }
 }
