@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 export const modifyExternalFileOnce = (path: string) => {
   const data = fs.readFileSync(path);
