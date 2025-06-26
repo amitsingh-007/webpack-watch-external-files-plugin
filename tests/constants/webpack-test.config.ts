@@ -3,8 +3,7 @@ import { type Configuration } from 'webpack';
 import WatchExternalFilesPlugin from '../../dist';
 import { type IPlugin } from '../types';
 
-// eslint-disable-next-line unicorn/prefer-module
-const outputDir = resolve(__dirname, '..', 'dist');
+const outputDir = resolve(import.meta.dirname, '..', 'dist');
 
 const getPlugins = (type: IPlugin) => {
   const plugins: Configuration['plugins'] = [];

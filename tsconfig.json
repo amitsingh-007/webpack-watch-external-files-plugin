@@ -1,15 +1,12 @@
 {
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "target": "esnext",
-    "lib": ["esnext"],
-    "strict": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "allowUnreachableCode": false,
     "noImplicitReturns": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
     "isolatedModules": true,
     "allowJs": true,
     "noEmit": true,
