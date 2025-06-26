@@ -1,13 +1,14 @@
-import { EventEmitter } from 'events';
-import { Compiler, Watching, webpack } from 'webpack';
+import { EventEmitter } from 'node:events';
+import { type Compiler, type Watching, webpack } from 'webpack';
 import getWebpackConfig from '../constants/webpack-test.config';
-import { IPlugin } from '../types';
+import { type IPlugin } from '../types';
 
 export const EVENTS = {
   EMIT: 'emit',
 } as const;
 
 class WebpackRunner {
+  // eslint-disable-next-line unicorn/prefer-event-target
   private readonly eventEmitter = new EventEmitter();
   private readonly compiler: Compiler;
   private readonly watching: Watching;
@@ -16,35 +17,13 @@ class WebpackRunner {
   constructor(type: IPlugin) {
     const config = getWebpackConfig(type);
     this.compiler = webpack(config);
-    this.watching = this.compiler.watch({}, (err, stats) => {
-      if (err) throw new Error(err.message);
+    this.watching = this.compiler.watch({}, (error, stats) => {
+      if (error) throw new Error(error.message);
       if (stats?.hasErrors()) throw new Error(stats.toString());
       console.log('Webpack watching...');
     });
     this.addListeners();
   }
-
-  private addListeners = () => {
-    this.compiler.hooks.afterEmit.tap('test', () => {
-      this.eventEmitter.emit(EVENTS.EMIT, ++this.emitCount);
-    });
-  };
-
-  private closeWatching = async () =>
-    new Promise<void>((resolve, reject) => {
-      this.watching.close((closeErr) => {
-        console.log('Watching ended.');
-        return closeErr ? reject(closeErr) : resolve();
-      });
-    });
-
-  private closeCompiler = async () =>
-    new Promise<void>((resolve, reject) => {
-      this.compiler.close((closeErr) => {
-        console.log('Compiler ended.');
-        return closeErr ? reject(closeErr) : resolve();
-      });
-    });
 
   waitForEmit = async () =>
     new Promise((resolve) => {
@@ -58,9 +37,39 @@ class WebpackRunner {
         await Promise.all([this.closeWatching(), this.closeCompiler()]);
         console.log('Cleanup complete.');
         resolve();
-      } catch (e) {
-        reject(e);
+      } catch (error) {
+        reject(error);
       }
+    });
+
+  private readonly addListeners = () => {
+    this.compiler.hooks.afterEmit.tap('test', () => {
+      this.eventEmitter.emit(EVENTS.EMIT, ++this.emitCount);
+    });
+  };
+
+  private readonly closeWatching = async () =>
+    new Promise<void>((resolve, reject) => {
+      this.watching.close((closeError) => {
+        console.log('Watching ended.');
+        if (closeError) {
+          reject(closeError);
+        } else {
+          resolve();
+        }
+      });
+    });
+
+  private readonly closeCompiler = async () =>
+    new Promise<void>((resolve, reject) => {
+      this.compiler.close((closeError) => {
+        console.log('Compiler ended.');
+        if (closeError) {
+          reject(closeError);
+        } else {
+          resolve();
+        }
+      });
     });
 }
 

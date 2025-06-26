@@ -1,8 +1,57 @@
-'use strict';
+import { resolve } from 'path';
+import { globSync } from 'glob';
 
-var glob = require('glob');
-var path = require('path');
+// src/index.ts
 
-var i="WebpackWatchExternalFilesPlugin";var p=c=>{let{filesToWatch:s,filesToExclude:l}=c.reduce((e,o)=>{if(o[0]!=="!"){let t=glob.globSync(o);e.filesToWatch.push(...t);}else {let t=glob.globSync(o.substr(1));e.filesToExclude.push(...t);}return e},{filesToWatch:[],filesToExclude:[]});return Array.from(new Set(s.filter(e=>!l.includes(e)))).map(e=>path.resolve(e))},r=class{files;constructor({files:s}){this.files=s;}apply(s){let l=s.getInfrastructureLogger(i);s.hooks.initialize.tap(i,()=>{l.info("Watching External Files:",this.files);}),s.hooks.afterCompile.tapAsync(i,(f,e)=>{p(this.files).map(t=>f.fileDependencies.add(t)),e();});}},d=r;
+// src/constants/plugin.ts
+var PLUGIN_NAME = "WebpackWatchExternalFilesPlugin";
 
-module.exports = d;
+// src/index.ts
+var getExternalFilesToWatch = (files) => {
+  const { filesToWatch, filesToExclude } = files.reduce(
+    (acc, pattern) => {
+      if (pattern.startsWith("!")) {
+        const files2 = globSync(pattern.slice(1));
+        acc.filesToExclude.push(...files2);
+      } else {
+        const files2 = globSync(pattern);
+        acc.filesToWatch.push(...files2);
+      }
+      return acc;
+    },
+    {
+      filesToWatch: [],
+      filesToExclude: []
+    }
+  );
+  const watchedFilesSet = new Set(
+    filesToWatch.filter((file) => !filesToExclude.includes(file))
+  );
+  const resolvedFilesToWatch = [...watchedFilesSet].map(
+    (file) => resolve(file)
+  );
+  return resolvedFilesToWatch;
+};
+var WatchExternalFilesPlugin = class {
+  files;
+  constructor({ files }) {
+    this.files = files;
+  }
+  apply(compiler) {
+    const logger = compiler.getInfrastructureLogger(PLUGIN_NAME);
+    compiler.hooks.initialize.tap(PLUGIN_NAME, () => {
+      logger.info("Watching External Files:", this.files);
+    });
+    compiler.hooks.afterCompile.tapAsync(
+      PLUGIN_NAME,
+      (compilation, callback) => {
+        const filesToWatch = getExternalFilesToWatch(this.files);
+        filesToWatch.map((file) => compilation.fileDependencies.add(file));
+        callback();
+      }
+    );
+  }
+};
+var index_default = WatchExternalFilesPlugin;
+
+export { index_default as default };

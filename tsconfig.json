@@ -1,18 +1,22 @@
 {
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
-    "lib": ["esnext"],
-    "strict": true,
+    "moduleResolution": "bundler",
     "allowUnreachableCode": false,
     "noImplicitReturns": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
     "isolatedModules": true,
     "allowJs": true,
     "noEmit": true,
     "declaration": true
   },
-  "include": ["tests", "src", "tsup.config.ts"]
+  "include": [
+    "tests",
+    "src",
+    "tsup.config.ts",
+    "vitest.config.ts",
+    "xo.config.ts"
+  ]
 }

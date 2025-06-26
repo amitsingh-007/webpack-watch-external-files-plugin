@@ -1,15 +1,16 @@
-import { resolve } from 'path';
-import { Configuration } from 'webpack';
+import { resolve } from 'node:path';
+import { type Configuration } from 'webpack';
 import WatchExternalFilesPlugin from '../../dist';
-import { IPlugin } from '../types';
+import { type IPlugin } from '../types';
 
-const outputDir = resolve(__dirname, '..', 'dist');
+const outputDir = resolve(import.meta.dirname, '..', 'dist');
 
 const getPlugins = (type: IPlugin) => {
   const plugins: Configuration['plugins'] = [];
   if (type === 'NONE') {
     return plugins;
   }
+
   plugins.push(
     new WatchExternalFilesPlugin({
       files: ['tests/files/external-file.js'],

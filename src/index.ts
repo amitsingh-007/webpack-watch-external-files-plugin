@@ -1,23 +1,24 @@
+import { resolve } from 'node:path';
 import { globSync } from 'glob';
-import { resolve } from 'path';
-import { Compiler } from 'webpack';
+import { type Compiler } from 'webpack';
 import { PLUGIN_NAME } from './constants/plugin';
-import { IOptions } from './types/plugin';
+import { type IOptions } from './types/plugin';
 
 const getExternalFilesToWatch = (files: string[]) => {
   const { filesToWatch, filesToExclude } = files.reduce<{
     filesToWatch: string[];
     filesToExclude: string[];
   }>(
-    (obj, pattern) => {
-      if (pattern[0] !== '!') {
-        const files = globSync(pattern);
-        obj.filesToWatch.push(...files);
+    (acc, pattern) => {
+      if (pattern.startsWith('!')) {
+        const files = globSync(pattern.slice(1));
+        acc.filesToExclude.push(...files);
       } else {
-        const files = globSync(pattern.substr(1));
-        obj.filesToExclude.push(...files);
+        const files = globSync(pattern);
+        acc.filesToWatch.push(...files);
       }
-      return obj;
+
+      return acc;
     },
     {
       filesToWatch: [],
@@ -25,17 +26,19 @@ const getExternalFilesToWatch = (files: string[]) => {
     }
   );
 
-  const resolvedFilesToWatch = Array.from(
-    new Set(filesToWatch.filter((file) => !filesToExclude.includes(file)))
-  ).map((file) => resolve(file));
+  const watchedFilesSet = new Set(
+    filesToWatch.filter((file) => !filesToExclude.includes(file))
+  );
+  const resolvedFilesToWatch = [...watchedFilesSet].map((file) =>
+    resolve(file)
+  );
 
   return resolvedFilesToWatch;
 };
 
 class WatchExternalFilesPlugin {
-  private files: string[];
+  private readonly files: string[];
   constructor({ files }: IOptions) {
-    //TODO: add validation
     this.files = files;
   }
 

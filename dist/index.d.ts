@@ -5,7 +5,7 @@ interface IOptions {
 }
 
 declare class WatchExternalFilesPlugin {
-    private files;
+    private readonly files;
     constructor({ files }: IOptions);
     apply(compiler: Compiler): void;
 }
