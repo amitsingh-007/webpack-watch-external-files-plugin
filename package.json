@@ -1,6 +1,6 @@
 {
   "name": "webpack-watch-external-files-plugin",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Webpack plugin to watch external files",
   "private": false,
   "main": "./dist/index.js",
@@ -22,15 +22,16 @@
   },
   "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
   "engines": {
-    "node": ">=16"
+    "node": ">=20"
   },
   "scripts": {
     "build": "tsup-node",
-    "dist": "pnpm test && pnpm build",
+    "dist": "pnpm lint && pnpm test && pnpm build",
+    "lint": "xo",
     "test": "vitest run --poolOptions.threads.singleThread"
   },
   "peerDependencies": {
-    "webpack": "^4 || ^5"
+    "webpack": "^5"
   },
   "dependencies": {
     "glob": "11.0.3",
@@ -42,6 +43,7 @@
     "tsup": "8.5.0",
     "typescript": "5.8.3",
     "vitest": "3.2.4",
-    "webpack": "5.99.9"
+    "webpack": "5.99.9",
+    "xo": "1.1.1"
   }
 }

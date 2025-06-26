@@ -1,8 +1,9 @@
-import { resolve } from 'path';
-import { Configuration } from 'webpack';
+import { resolve } from 'node:path';
+import { type Configuration } from 'webpack';
 import WatchExternalFilesPlugin from '../../dist';
-import { IPlugin } from '../types';
+import { type IPlugin } from '../types';
 
+// eslint-disable-next-line unicorn/prefer-module
 const outputDir = resolve(__dirname, '..', 'dist');
 
 const getPlugins = (type: IPlugin) => {
@@ -10,6 +11,7 @@ const getPlugins = (type: IPlugin) => {
   if (type === 'NONE') {
     return plugins;
   }
+
   plugins.push(
     new WatchExternalFilesPlugin({
       files: ['tests/files/external-file.js'],

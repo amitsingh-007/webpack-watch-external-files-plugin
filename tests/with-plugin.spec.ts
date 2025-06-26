@@ -4,7 +4,7 @@ import { dummyFile, externalFile, testDistDir } from './constants/path';
 import { getDirFilesCount, modifyExternalFileOnce } from './helpers/file';
 import { delay } from './helpers/test';
 import WebpackRunner from './helpers/webpack-runner';
-import { IPlugin } from './types';
+import { type IPlugin } from './types';
 
 describe('with plugin', () => {
   let runner: WebpackRunner;
