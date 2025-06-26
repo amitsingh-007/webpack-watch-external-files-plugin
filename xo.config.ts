@@ -1,4 +1,3 @@
-// @ts-expect-error TODO to fix
 import { type FlatXoConfig } from 'xo';
 
 const xoConfig: FlatXoConfig = [

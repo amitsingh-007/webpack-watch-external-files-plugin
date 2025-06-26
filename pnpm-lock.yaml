@@ -18,6 +18,9 @@ importers:
       '@types/glob':
         specifier: 8.1.0
         version: 8.1.0
+      '@types/node':
+        specifier: 24.0.4
+        version: 24.0.4
       rimraf:
         specifier: 6.0.1
         version: 6.0.1
@@ -494,9 +497,6 @@ packages:
 
   '@types/minimatch@5.1.2':
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
-
-  '@types/node@15.3.0':
-    resolution: {integrity: sha512-8/bnjSZD86ZfpBsDlCIkNXIvm+h6wi9g7IqL+kmFkQ+Wvu3JrasgLElfiPgoo8V8vVfnEi0QVS12gbl94h9YsQ==}
 
   '@types/node@24.0.4':
     resolution: {integrity: sha512-ulyqAkrhnuNq9pB76DRBTkcS6YsmDALy6Ua63V8OhrOBgbcYt6IOdzpw5P1+dyRIyMerzLkeYWBeOXPpA9GMAA==}
@@ -3075,13 +3075,11 @@ snapshots:
   '@types/glob@8.1.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 15.3.0
+      '@types/node': 24.0.4
 
   '@types/json-schema@7.0.15': {}
 
   '@types/minimatch@5.1.2': {}
-
-  '@types/node@15.3.0': {}
 
   '@types/node@24.0.4':
     dependencies:

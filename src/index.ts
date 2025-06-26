@@ -1,5 +1,4 @@
-// eslint-disable-next-line unicorn/prefer-node-protocol
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { globSync } from 'glob';
 import { type Compiler } from 'webpack';
 import { PLUGIN_NAME } from './constants/plugin';
@@ -40,7 +39,6 @@ const getExternalFilesToWatch = (files: string[]) => {
 class WatchExternalFilesPlugin {
   private readonly files: string[];
   constructor({ files }: IOptions) {
-    // TODO: add validation
     this.files = files;
   }
 
