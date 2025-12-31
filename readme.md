@@ -5,6 +5,9 @@
 
 ![npm](https://img.shields.io/npm/v/webpack-watch-external-files-plugin) ![bundlephobia](https://badgen.net/bundlephobia/min/webpack-watch-external-files-plugin) [![Publish on NPM](https://github.com/amitsingh-007/webpack-watch-external-files-plugin/actions/workflows/publish.yaml/badge.svg)](https://github.com/amitsingh-007/webpack-watch-external-files-plugin/actions/workflows/publish.yaml) ![node-lts](https://img.shields.io/node/v-lts/webpack-watch-external-files-plugin) ![NPM](https://img.shields.io/npm/l/webpack-watch-external-files-plugin)
 
+> ⚠️ This package is ESM-only and must be used with ESM-compatible build configurations.
+> For CommonJS support, please use version 3.x of this package.
+
 ## Install
 
 ```bash
