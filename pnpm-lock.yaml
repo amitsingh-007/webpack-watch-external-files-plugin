@@ -22,8 +22,8 @@ importers:
         specifier: 9.0.0
         version: 9.0.0
       '@types/node':
-        specifier: 24.0.4
-        version: 24.0.4
+        specifier: 25.0.3
+        version: 25.0.3
       rimraf:
         specifier: 6.0.1
         version: 6.0.1
@@ -35,7 +35,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 4.0.16
-        version: 4.0.16(@types/node@24.0.4)(terser@5.43.1)
+        version: 4.0.16(@types/node@25.0.3)(terser@5.43.1)
       webpack:
         specifier: 5.99.9
         version: 5.99.9(esbuild@0.25.5)
@@ -763,8 +763,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@24.0.4':
-    resolution: {integrity: sha512-ulyqAkrhnuNq9pB76DRBTkcS6YsmDALy6Ua63V8OhrOBgbcYt6IOdzpw5P1+dyRIyMerzLkeYWBeOXPpA9GMAA==}
+  '@types/node@25.0.3':
+    resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
 
   '@typescript-eslint/eslint-plugin@8.51.0':
     resolution: {integrity: sha512-XtssGWJvypyM2ytBnSnKtHYOGT+4ZwTnBVl36TA4nRO2f4PRNGz5/1OszHzcZCvcBMh+qb7I06uoCmLTRdR9og==}
@@ -2848,8 +2848,8 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
-  undici-types@7.8.0:
-    resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   unicorn-magic@0.3.0:
     resolution: {integrity: sha512-+QBBXBCvifc56fsbuxZQ6Sic3wqqc3WWaqxs58gvJrcOuN83HGTCwz3oS5phzU9LthRNE9VrJCFCLUgHeeFnfA==}
@@ -3543,9 +3543,9 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@24.0.4':
+  '@types/node@25.0.3':
     dependencies:
-      undici-types: 7.8.0
+      undici-types: 7.16.0
 
   '@typescript-eslint/eslint-plugin@8.51.0(@typescript-eslint/parser@8.51.0(eslint@9.39.2)(typescript@5.8.3))(eslint@9.39.2)(typescript@5.8.3)':
     dependencies:
@@ -3706,13 +3706,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.16(vite@7.3.0(@types/node@24.0.4)(terser@5.43.1))':
+  '@vitest/mocker@4.0.16(vite@7.3.0(@types/node@25.0.3)(terser@5.43.1))':
     dependencies:
       '@vitest/spy': 4.0.16
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.0(@types/node@24.0.4)(terser@5.43.1)
+      vite: 7.3.0(@types/node@25.0.3)(terser@5.43.1)
 
   '@vitest/pretty-format@4.0.16':
     dependencies:
@@ -5022,7 +5022,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.0.4
+      '@types/node': 25.0.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -5878,7 +5878,7 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
-  undici-types@7.8.0: {}
+  undici-types@7.16.0: {}
 
   unicorn-magic@0.3.0: {}
 
@@ -5926,7 +5926,7 @@ snapshots:
     dependencies:
       inherits: 2.0.3
 
-  vite@7.3.0(@types/node@24.0.4)(terser@5.43.1):
+  vite@7.3.0(@types/node@25.0.3)(terser@5.43.1):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -5935,14 +5935,14 @@ snapshots:
       rollup: 4.54.0
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.0.4
+      '@types/node': 25.0.3
       fsevents: 2.3.3
       terser: 5.43.1
 
-  vitest@4.0.16(@types/node@24.0.4)(terser@5.43.1):
+  vitest@4.0.16(@types/node@25.0.3)(terser@5.43.1):
     dependencies:
       '@vitest/expect': 4.0.16
-      '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@24.0.4)(terser@5.43.1))
+      '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@25.0.3)(terser@5.43.1))
       '@vitest/pretty-format': 4.0.16
       '@vitest/runner': 4.0.16
       '@vitest/snapshot': 4.0.16
@@ -5959,10 +5959,10 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.0(@types/node@24.0.4)(terser@5.43.1)
+      vite: 7.3.0(@types/node@25.0.3)(terser@5.43.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 24.0.4
+      '@types/node': 25.0.3
     transitivePeerDependencies:
       - jiti
       - less
