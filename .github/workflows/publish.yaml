@@ -40,4 +40,4 @@ jobs:
           fi
 
       - name: Publish on NPM
-        run: pnpm publish
+        run: pnpm publish --provenance --no-git-checks
