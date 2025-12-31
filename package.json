@@ -42,7 +42,7 @@
     "webpack": "^5"
   },
   "dependencies": {
-    "glob": "11.0.3",
+    "glob": "13.0.0",
     "path": "0.12.7"
   },
   "devDependencies": {
