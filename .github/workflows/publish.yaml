@@ -22,7 +22,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install
@@ -38,12 +37,6 @@ jobs:
             git diff
             exit 1
           fi
-
-      - name: Ensure no npm auth token is present
-        run: |
-          unset NODE_AUTH_TOKEN
-          npm config delete //registry.npmjs.org/:_authToken || true
-          rm -f ~/.npmrc
 
       - name: Publish on NPM
         run: pnpm publish --provenance --no-git-checks
