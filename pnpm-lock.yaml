@@ -16,8 +16,8 @@ importers:
         version: 0.12.7
     devDependencies:
       '@tsconfig/node20':
-        specifier: 20.1.8
-        version: 20.1.8
+        specifier: 20.1.10
+        version: 20.1.10
       '@types/node':
         specifier: 26.2.0
         version: 26.2.0
@@ -786,8 +786,8 @@ packages:
     peerDependencies:
       eslint: '>=9.0.0'
 
-  '@tsconfig/node20@20.1.8':
-    resolution: {integrity: sha512-Em+IdPfByIzWRRpqWL4Z7ArLHZGxmc36BxE3jCz9nBFSm+5aLaPMZyjwu4yetvyKXeogWcxik4L1jB5JTWfw7A==}
+  '@tsconfig/node20@20.1.10':
+    resolution: {integrity: sha512-5OZgdnxbFuvwm05iVwPXMU5/7iPuVDDZzAnxPDLj+kjN7fwQZSSVgHQhKTNkBPOO6Qef2D5MxPAoPLCGqE2VuQ==}
 
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
@@ -3584,7 +3584,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tsconfig/node20@20.1.8': {}
+  '@tsconfig/node20@20.1.10': {}
 
   '@tybys/wasm-util@0.9.0':
     dependencies:
