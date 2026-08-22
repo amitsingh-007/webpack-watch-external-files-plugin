@@ -1,19 +1,14 @@
 name: Verify build
 
 on:
+  # `branches-ignore` filters the *base* branch: dependabot opens its individual
+  # PRs against `dependabot-updates`, and only the aggregate PR into `main` needs CI.
   pull_request:
-    types: [opened, reopened, synchronize]
     branches-ignore:
       - 'dependabot-updates'
-  push:
-    branches-ignore:
-      - 'main'
-      - 'dependabot/**'
 
-# `synchronize` overlaps the push trigger for in-repo branches; keying on the head
-# sha cancels the duplicate run instead of doubling CI minutes.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
