@@ -28,7 +28,7 @@ jobs:
         run: pnpm install
 
       - name: Format, lint, typecheck and test
-        run: pnpm dist
+        run: pnpm verify
 
       - name: Publish on NPM
         run: pnpm publish --provenance --no-git-checks

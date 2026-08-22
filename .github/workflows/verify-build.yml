@@ -50,8 +50,9 @@ jobs:
       - name: Smoke-test the built bundle
         run: >
           node --input-type=module -e
-          "import p from './dist/index.js';
-          if (typeof p !== 'function') { throw new Error('default export is not a class'); }"
+          "import Plugin from './dist/index.js';
+          const plugin = new Plugin({ files: ['tests/files/*.js'] });
+          if (typeof plugin.apply !== 'function') { throw new Error('plugin.apply is missing'); }"
 
   Test:
     name: node ${{ matrix.node }}

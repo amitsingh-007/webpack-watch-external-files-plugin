@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "dist": "pnpm format:check && pnpm lint:ci && pnpm typecheck && pnpm test",
+    "verify": "pnpm format:check && pnpm lint:ci && pnpm typecheck && pnpm test",
     "lint": "oxlint --fix",
     "lint:ci": "oxlint",
     "format": "oxfmt",

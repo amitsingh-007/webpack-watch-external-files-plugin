@@ -61,19 +61,23 @@ describe('watch external files', () => {
     await runner.cleanup();
   });
 
-  it.each(cases)('%s', async (_name, files, changedFile, rebuilds) => {
-    runner = new WebpackRunner(files);
-    await expect(runner.waitForEmit()).resolves.toBe(1);
-    expect(distFileCount()).toBe(1);
-
-    touch(changedFile);
-
-    if (rebuilds) {
-      await expect(runner.waitForEmit()).resolves.toBe(2);
-      expect(distFileCount()).toBe(2);
-    } else {
-      await delay(NO_REBUILD_WINDOW_MS);
+  it.each(cases)(
+    '%s',
+    async (_name, files, changedFile, rebuilds) => {
+      runner = new WebpackRunner(files);
+      await expect(runner.waitForEmit()).resolves.toBe(1);
       expect(distFileCount()).toBe(1);
-    }
-  });
+
+      touch(changedFile);
+
+      if (rebuilds) {
+        await expect(runner.waitForEmit()).resolves.toBe(2);
+        expect(distFileCount()).toBe(2);
+      } else {
+        await delay(NO_REBUILD_WINDOW_MS);
+        expect(distFileCount()).toBe(1);
+      }
+    },
+    30_000
+  );
 });
