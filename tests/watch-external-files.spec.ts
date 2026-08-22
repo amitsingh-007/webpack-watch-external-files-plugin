@@ -10,6 +10,10 @@ const testDistDir = 'tests/dist';
 const touch = (path: string) => writeFileSync(path, readFileSync(path));
 const distFileCount = () => readdirSync(testDistDir).length;
 
+// Negative cases have no event to await, so they wait out a window in which a
+// wrongly-watched file would have rebuilt. A rebuild of this fixture takes ~100ms.
+const NO_REBUILD_WINDOW_MS = 1500;
+
 const excludingGlob = ['tests/files/*.js', `!${dummyFile}`];
 
 const cases: [
@@ -68,7 +72,7 @@ describe('watch external files', () => {
       await expect(runner.waitForEmit()).resolves.toBe(2);
       expect(distFileCount()).toBe(2);
     } else {
-      await delay(1500);
+      await delay(NO_REBUILD_WINDOW_MS);
       expect(distFileCount()).toBe(1);
     }
   });

@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint, typecheck, test and build
+      - name: Format, lint, typecheck and test
         run: pnpm dist
 
       - name: Publish on NPM

@@ -47,13 +47,20 @@ class WebpackRunner {
   private readonly compiler: Compiler;
   private readonly watching: Watching;
   private emitCount = 0;
+  private failure: Error | null = null;
 
   constructor(files: string[] | null) {
     this.compiler = webpack(getWebpackConfig(files));
     // Compiler.watch() returns undefined if the compiler is already running.
+    // This callback fires asynchronously on every rebuild, so throwing here would
+    // escape as an uncaught exception instead of failing the test.
     const watching = this.compiler.watch({}, (error, stats) => {
-      if (error) throw new Error(error.message);
-      if (stats?.hasErrors()) throw new Error(stats.toString());
+      const failure =
+        error ?? (stats?.hasErrors() ? new Error(stats.toString()) : null);
+      if (failure) {
+        this.failure = failure;
+        this.eventEmitter.emit('fail', failure);
+      }
     });
     if (!watching) {
       throw new Error('Failed to start the webpack watcher.');
@@ -66,13 +73,16 @@ class WebpackRunner {
   }
 
   waitForEmit = async () =>
-    new Promise<number>((resolve) => {
+    new Promise<number>((resolve, reject) => {
       this.eventEmitter.once('emit', resolve);
+      this.eventEmitter.once('fail', reject);
     });
 
   cleanup = async (): Promise<void> => {
-    this.eventEmitter.removeAllListeners('emit');
+    this.eventEmitter.removeAllListeners();
     await Promise.all([close(this.watching), close(this.compiler)]);
+    // Catches a failure that landed while no waitForEmit() was pending.
+    if (this.failure) throw this.failure;
   };
 }
 

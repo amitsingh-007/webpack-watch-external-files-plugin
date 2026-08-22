@@ -2,13 +2,19 @@ name: Verify build
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
     branches-ignore:
       - 'dependabot-updates'
   push:
     branches-ignore:
       - 'main'
       - 'dependabot/**'
+
+# `synchronize` overlaps the push trigger for in-repo branches; keying on the head
+# sha cancels the duplicate run instead of doubling CI minutes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
