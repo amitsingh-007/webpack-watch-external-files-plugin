@@ -1,27 +1,31 @@
 import { EventEmitter } from 'node:events';
 import { type Compiler, type Watching, webpack } from 'webpack';
 import getWebpackConfig from '../constants/webpack-test.config';
-import { type IPlugin } from '../types';
 
 export const EVENTS = {
   EMIT: 'emit',
 } as const;
 
 class WebpackRunner {
-  // eslint-disable-next-line unicorn/prefer-event-target
   private readonly eventEmitter = new EventEmitter();
   private readonly compiler: Compiler;
   private readonly watching: Watching;
   private emitCount = 0;
 
-  constructor(type: IPlugin) {
-    const config = getWebpackConfig(type);
+  constructor(withPlugin: boolean) {
+    const config = getWebpackConfig(withPlugin);
     this.compiler = webpack(config);
-    this.watching = this.compiler.watch({}, (error, stats) => {
+    // Compiler.watch() returns undefined if the compiler is already running.
+    const watching = this.compiler.watch({}, (error, stats) => {
       if (error) throw new Error(error.message);
       if (stats?.hasErrors()) throw new Error(stats.toString());
       console.log('Webpack watching...');
     });
+    if (!watching) {
+      throw new Error('Failed to start the webpack watcher.');
+    }
+
+    this.watching = watching;
     this.addListeners();
   }
 
@@ -30,17 +34,11 @@ class WebpackRunner {
       this.eventEmitter.once(EVENTS.EMIT, resolve);
     });
 
-  cleanup = async (): Promise<void> =>
-    new Promise(async (resolve, reject) => {
-      try {
-        this.eventEmitter.removeAllListeners(EVENTS.EMIT);
-        await Promise.all([this.closeWatching(), this.closeCompiler()]);
-        console.log('Cleanup complete.');
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
+  cleanup = async (): Promise<void> => {
+    this.eventEmitter.removeAllListeners(EVENTS.EMIT);
+    await Promise.all([this.closeWatching(), this.closeCompiler()]);
+    console.log('Cleanup complete.');
+  };
 
   private readonly addListeners = () => {
     this.compiler.hooks.afterEmit.tap('test', () => {

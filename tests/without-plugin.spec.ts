@@ -8,7 +8,7 @@ import WebpackRunner from './helpers/webpack-runner';
 describe('without plugin', () => {
   let runner: WebpackRunner;
   beforeEach(() => {
-    runner = new WebpackRunner('NONE');
+    runner = new WebpackRunner(false);
     rimraf.sync(testDistDir);
   });
 

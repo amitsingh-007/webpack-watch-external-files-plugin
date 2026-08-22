@@ -1,13 +1,12 @@
 import { resolve } from 'node:path';
 import { type Configuration } from 'webpack';
-import WatchExternalFilesPlugin from '../../dist';
-import { type IPlugin } from '../types';
+import WatchExternalFilesPlugin from '../../src';
 
 const outputDir = resolve(import.meta.dirname, '..', 'dist');
 
-const getPlugins = (type: IPlugin) => {
+const getPlugins = (withPlugin: boolean) => {
   const plugins: Configuration['plugins'] = [];
-  if (type === 'NONE') {
+  if (!withPlugin) {
     return plugins;
   }
 
@@ -19,7 +18,7 @@ const getPlugins = (type: IPlugin) => {
   return plugins;
 };
 
-const getWebpackConfig = (type: IPlugin): Configuration => ({
+const getWebpackConfig = (withPlugin: boolean): Configuration => ({
   mode: 'production',
   name: 'test',
   entry: ['./tests/files/test-file.js'],
@@ -35,7 +34,7 @@ const getWebpackConfig = (type: IPlugin): Configuration => ({
   watchOptions: {
     ignored: 'node_modules/**',
   },
-  plugins: getPlugins(type),
+  plugins: getPlugins(withPlugin),
 });
 
 export default getWebpackConfig;

@@ -11,11 +11,11 @@ const getExternalFilesToWatch = (files: string[]) => {
   }>(
     (acc, pattern) => {
       if (pattern.startsWith('!')) {
-        const files = globSync(pattern.slice(1));
-        acc.filesToExclude.push(...files);
+        const excluded = globSync(pattern.slice(1));
+        acc.filesToExclude.push(...excluded);
       } else {
-        const files = globSync(pattern);
-        acc.filesToWatch.push(...files);
+        const matched = globSync(pattern);
+        acc.filesToWatch.push(...matched);
       }
 
       return acc;
@@ -51,7 +51,9 @@ class WatchExternalFilesPlugin {
       PLUGIN_NAME,
       (compilation, callback) => {
         const filesToWatch = getExternalFilesToWatch(this.files);
-        filesToWatch.map((file) => compilation.fileDependencies.add(file));
+        for (const file of filesToWatch) {
+          compilation.fileDependencies.add(file);
+        }
         callback();
       }
     );

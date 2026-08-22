@@ -1,12 +1,9 @@
 <div align="center">
   <h1>Webpack Watch External Files Plugin</h1>
-  <p>A Webpack Plugin having zero dependencies which allows you to watch external files which are not included in the webpack build. It triggers a webpack build if any external file changes.</p>
+  <p>A lightweight Webpack Plugin which allows you to watch external files which are not included in the webpack build. It triggers a webpack build if any external file changes.</p>
 </div>
 
 ![npm](https://img.shields.io/npm/v/webpack-watch-external-files-plugin) ![bundlephobia](https://badgen.net/bundlephobia/min/webpack-watch-external-files-plugin) [![Publish on NPM](https://github.com/amitsingh-007/webpack-watch-external-files-plugin/actions/workflows/publish.yaml/badge.svg)](https://github.com/amitsingh-007/webpack-watch-external-files-plugin/actions/workflows/publish.yaml) ![node-lts](https://img.shields.io/node/v-lts/webpack-watch-external-files-plugin) ![NPM](https://img.shields.io/npm/l/webpack-watch-external-files-plugin)
-
-> ⚠️ This package is ESM-only and must be used with ESM-compatible build configurations.
-> For CommonJS support, please use version 3.x of this package.
 
 ## Install
 
@@ -21,9 +18,9 @@ yarn add webpack-watch-external-files-plugin --dev
 ```js
 // webpack.config.js:
 
-const WatchExternalFilesPlugin = require('webpack-watch-external-files-plugin');
+import WatchExternalFilesPlugin from 'webpack-watch-external-files-plugin';
 
-module.exports = {
+export default {
   plugins: [
     new WatchExternalFilesPlugin({
       files: ['/path/**/*.js', '/path/tofile.txt', '!./src/**/*.json'],
