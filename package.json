@@ -1,17 +1,16 @@
 {
   "name": "webpack-watch-external-files-plugin",
-  "version": "4.1.0",
-  "type": "module",
+  "version": "5.0.0",
   "description": "Webpack plugin to watch external files",
-  "private": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
+  "keywords": [
+    "watch external files",
+    "webpack",
+    "webpack plugin"
+  ],
+  "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin/issues",
+    "email": "amitsingh5198@gmail.com"
   },
   "license": "MIT",
   "author": "Amit Singh <amitsingh5198@gmail.com> (https://github.com/amitsingh-007/)",
@@ -19,41 +18,46 @@
     "type": "git",
     "url": "git+https://github.com/amitsingh-007/webpack-watch-external-files-plugin.git"
   },
-  "keywords": [
-    "webpack",
-    "webpack plugin",
-    "watch external files"
+  "files": [
+    "dist"
   ],
-  "bugs": {
-    "url": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin/issues",
-    "email": "amitsingh5198@gmail.com"
-  },
-  "homepage": "https://github.com/amitsingh-007/webpack-watch-external-files-plugin#readme",
-  "engines": {
-    "node": ">=20"
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "scripts": {
-    "build": "tsup-node",
-    "dist": "pnpm lint && pnpm test && pnpm build",
-    "lint": "xo",
-    "test": "vitest run"
+    "build": "tsdown",
+    "verify": "pnpm format:check && pnpm lint:ci && pnpm typecheck && pnpm test",
+    "lint": "oxlint --fix",
+    "lint:ci": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "oxfmt": "0.64.0",
+    "oxlint": "1.79.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "publint": "0.3.24",
+    "tsdown": "0.22.14",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11",
+    "webpack": "5.109.2"
   },
   "peerDependencies": {
     "webpack": "^5"
   },
-  "dependencies": {
-    "glob": "13.0.0",
-    "path": "0.12.7"
+  "engines": {
+    "node": ">=22.17"
   },
-  "devDependencies": {
-    "@tsconfig/node20": "20.1.8",
-    "@types/node": "25.0.3",
-    "rimraf": "6.1.2",
-    "tsup": "8.5.1",
-    "typescript": "5.8.3",
-    "vitest": "4.0.16",
-    "webpack": "5.104.1",
-    "xo": "1.2.3"
-  },
-  "packageManager": "pnpm@10.26.2"
+  "packageManager": "pnpm@11.22.0"
 }
