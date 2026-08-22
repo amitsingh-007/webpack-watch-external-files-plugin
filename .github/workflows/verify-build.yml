@@ -1,10 +1,23 @@
 name: Verify build
 
 on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches-ignore:
+      - 'dependabot-updates'
   push:
     branches-ignore:
       - 'main'
       - 'dependabot/**'
+
+# `synchronize` overlaps the push trigger for in-repo branches; keying on the head
+# sha cancels the duplicate run instead of doubling CI minutes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   Verify:
@@ -12,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -19,26 +34,53 @@ jobs:
       - name: Setting up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generating dist/
-        run: pnpm dist
+      - name: Check formatting
+        run: pnpm format:check
 
-      - name: Compare the expected and actual dist/ directories
-        id: diff
-        run: |
-          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build.  See status below:"
-            git diff
-            exit 1
-          fi
+      - name: Lint
+        run: pnpm lint:ci
 
-      - uses: actions/upload-artifact@v7
-        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+
+      - name: Smoke-test the built bundle
+        run: >
+          node --input-type=module -e
+          "import p from './dist/index.js';
+          if (typeof p !== 'function') { throw new Error('default export is not a class'); }"
+
+  Test:
+    name: node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
-          name: dist
-          path: dist/
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setting up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run tests
+        run: pnpm test

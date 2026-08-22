@@ -20,24 +20,15 @@ jobs:
       - name: Setting up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: '22'
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generating dist/
+      - name: Format, lint, typecheck and test
         run: pnpm dist
-
-      - name: Compare the expected and actual dist/ directories
-        id: diff
-        run: |
-          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build.  See status below:"
-            git diff
-            exit 1
-          fi
 
       - name: Publish on NPM
         run: pnpm publish --provenance --no-git-checks
