@@ -4,21 +4,7 @@ import WatchExternalFilesPlugin from '../../src';
 
 const outputDir = resolve(import.meta.dirname, '..', 'dist');
 
-const getPlugins = (withPlugin: boolean) => {
-  const plugins: Configuration['plugins'] = [];
-  if (!withPlugin) {
-    return plugins;
-  }
-
-  plugins.push(
-    new WatchExternalFilesPlugin({
-      files: ['tests/files/external-file.js'],
-    })
-  );
-  return plugins;
-};
-
-const getWebpackConfig = (withPlugin: boolean): Configuration => ({
+const getWebpackConfig = (files: string[] | null): Configuration => ({
   mode: 'production',
   name: 'test',
   entry: ['./tests/files/test-file.js'],
@@ -34,7 +20,7 @@ const getWebpackConfig = (withPlugin: boolean): Configuration => ({
   watchOptions: {
     ignored: 'node_modules/**',
   },
-  plugins: getPlugins(withPlugin),
+  plugins: files ? [new WatchExternalFilesPlugin({ files })] : [],
 });
 
 export default getWebpackConfig;

@@ -1,39 +1,23 @@
+import { globSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { globSync } from 'glob';
 import { type Compiler } from 'webpack';
-import { PLUGIN_NAME } from './constants/plugin';
-import { type IOptions } from './types/plugin';
 
-const getExternalFilesToWatch = (files: string[]) => {
-  const { filesToWatch, filesToExclude } = files.reduce<{
-    filesToWatch: string[];
-    filesToExclude: string[];
-  }>(
-    (acc, pattern) => {
-      if (pattern.startsWith('!')) {
-        const excluded = globSync(pattern.slice(1));
-        acc.filesToExclude.push(...excluded);
-      } else {
-        const matched = globSync(pattern);
-        acc.filesToWatch.push(...matched);
-      }
+const PLUGIN_NAME = 'WebpackWatchExternalFilesPlugin';
 
-      return acc;
-    },
-    {
-      filesToWatch: [],
-      filesToExclude: [],
-    }
+interface IOptions {
+  files: string[];
+}
+
+const isExcluded = (pattern: string) => pattern.startsWith('!');
+
+const getExternalFilesToWatch = (patterns: string[]) => {
+  const excluded = new Set(
+    globSync(patterns.filter(isExcluded).map((pattern) => pattern.slice(1)))
   );
 
-  const watchedFilesSet = new Set(
-    filesToWatch.filter((file) => !filesToExclude.includes(file))
-  );
-  const resolvedFilesToWatch = [...watchedFilesSet].map((file) =>
-    resolve(file)
-  );
-
-  return resolvedFilesToWatch;
+  return globSync(patterns.filter((pattern) => !isExcluded(pattern)))
+    .filter((file) => !excluded.has(file))
+    .map((file) => resolve(file));
 };
 
 class WatchExternalFilesPlugin {
