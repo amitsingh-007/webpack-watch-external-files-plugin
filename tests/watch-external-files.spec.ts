@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { setTimeout as delay } from 'node:timers/promises';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import WebpackRunner from './helpers/webpack-runner';
+import WebpackRunner from './webpack-runner';
 
 const externalFile = 'tests/files/external-file.js';
 const dummyFile = 'tests/files/dummy-file.js';
