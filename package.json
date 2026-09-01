@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/node": "26.2.0",
     "oxfmt": "0.64.0",
-    "oxlint": "1.79.0",
+    "oxlint": "1.80.0",
     "oxlint-tsgolint": "7.0.2001",
     "publint": "0.3.24",
     "tsdown": "0.22.14",
